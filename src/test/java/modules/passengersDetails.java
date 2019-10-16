@@ -406,6 +406,7 @@ public class passengersDetails {
 	static String CountryCode;
 	static String mobileCode;
 	static String ProcessIdValue="2";
+	static String StatusId="1";
 	static WebDriver driver;
 public static void adult1() throws Exception {
 		PageUtils.isElementLocated(driver,	By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Title*'])[1]/following::span[1]"));
@@ -3279,6 +3280,7 @@ public static void enterCardDetails(Database pnrDetails,WebDriver driver) throws
 static String PnrId;
 public static void GetPnr(WebDriver driver,Database pnrDetails) throws Exception
 {
+	PageUtils.waitForFixedTime(BrowserContants.WAIT_LONG);
 	PageUtils.isElementLocated(driver, By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Share on'])[1]/following::b[1]"));
 	PageUtils.isElementVisibil(driver, driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Share on'])[1]/following::b[1]")));
 	PageUtils.waitForFixedTime(BrowserContants.WAIT_MEDIUM);
@@ -3286,6 +3288,12 @@ public static void GetPnr(WebDriver driver,Database pnrDetails) throws Exception
 	System.out.println("PNR ID:"+PnrId);
 	PageUtils.getScreenShot(pnrDetails.PnrId,driver);
 	PageUtils.waitForFixedTime(BrowserContants.WAIT_VERY_SMALL);
+	
+	if(PnrId.isEmpty())
+	{
+		PnrId=flynasPage.confirmation_text().getText();
+		StatusId="-1";
+	}
 	returnStatus(pnrDetails);
 	generateMail(pnrDetails);
 }
@@ -3317,7 +3325,7 @@ public static void returnStatus(Database pnrDetails) throws InterruptedException
 	requestParams.put("PnrId",  pnrDetails.PnrId);
 	System.out.println("Booking Id:"+pnrDetails.PnrId);
 	requestParams.put("ProcessId",  ProcessIdValue);
-	requestParams.put("Status",  "1");
+	requestParams.put("Status",  StatusId);
 	requestParams.put("Remarks",  PnrId);
 	System.out.println("Remarks:"+PnrId);
 	System.out.println("-------------------------------------------");

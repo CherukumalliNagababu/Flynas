@@ -2806,6 +2806,19 @@ public class flynasPage extends BaseClass {
 			}
 			return element;
 		}		
-						
+			
+		public static WebElement confirmation_text() throws Exception {
+			element = null;
+			try {
+				element = driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Share on'])[1]/preceding::h1[1]"));
+				                                       
+			} catch (Exception e) {
+				
+				throw (e);
+			}
+			return element;
+		}		
+		
+		
 								
 }
